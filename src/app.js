@@ -8,7 +8,9 @@ const app = express();
 conectar();
 app.use(cors());
 
-app.use(authRoutes);
+//seba... morgan?
+app.use("/api", authRoutes);
+app.use(express.json());
 
 app.get("/registrar", (req, res) => {
     res.send('registrando usuario...')

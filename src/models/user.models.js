@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     nombre:{
         type: String,
         required: true,
@@ -23,6 +23,8 @@ const userSchema = mongoose.Schema({
         trim: true,
         unique: true,
     },
+}, {
+    timestamps: true
 })
 
 export default mongoose.model("User", userSchema)
