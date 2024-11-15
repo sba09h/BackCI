@@ -1,26 +1,28 @@
 import express from "express";
+import { conectar } from "../db.js";
 import cors from "cors";
-import { conectar } from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js";
+import morgan from "morgan";
+import cookieParser from "cookie-parser";
+import puerto from "../index.js"
+import signRoutes from "./routes/auth.sign.js";
 
-//aqui creamos una instancia de express
 const app = express();
+
 conectar();
+app.use(morgan("dev"));
+app.use(express.json());
+app.use(cookieParser());
 app.use(cors());
 
-//seba... morgan?
 app.use("/api", authRoutes);
-app.use(express.json());
-
-app.get("/registrar", (req, res) => {
-    res.send('registrando usuario...')
-} )
-
-const puerto = 3000;
-
-app.listen(puerto, ()=>{
-    console.log("el servidor esta escuchando en puerto 3000")
-})
-
+app.use("/api", signRoutes);
 
 export default app;
+
+// app.get("/registrar", (req, res) => {
+//     res.send('registrando usuario...')
+// } )
+
+
+// })
