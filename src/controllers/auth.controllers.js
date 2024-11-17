@@ -6,6 +6,9 @@ import {createAccessToken} from "../libs/jwt.js";
 export const register = async (req, res) => {
     const {nombre, correo, run, numeroDoc} = req.body;
     try {
+        const userFound = await User.findOne({correo})
+        if(userFound) return res.status(400).json( ["El correo ya existe"]);;
+
         const runHash = await bcrypt.hash(run, 10);
         const numHash = await bcrypt.hash(numeroDoc, 10);
         
