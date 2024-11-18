@@ -24,8 +24,14 @@ const userSchema = new mongoose.Schema({
         trim: true,
         unique: true,
     },
+    docFirmados: [{
+        idDocumento: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Contract"
+        }
+    }],
 }, {
     timestamps: true,
 });
 
-export default mongoose.model("User", userSchema)
+export default mongoose.model("User", userSchema);
