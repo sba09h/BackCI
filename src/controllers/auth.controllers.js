@@ -1,6 +1,8 @@
 import User from "../models/user.models.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken"
 import {createAccessToken} from "../libs/jwt.js";
+import { TOKEN_S } from "../../config.js";
 
 
 export const register = async (req, res) => {
@@ -82,5 +84,24 @@ export const sign = async (req, res) => {
         numeroDoc: userFound.numeroDoc,
         createdAt: userFound.createdAt,
         updateAt: userFound.updateAt,
+    });
+};
+
+export const verifyToken = async (req, res) =>{
+    const {token} = req.cookies
+
+    if(!token) return res.status(401).json({message: "No autorizado"});
+
+    jwt.verify(token, TOKEN_S, async (err, user) => {
+        if(!token) return res.status(401).json({message: "No autorizado"});
+
+        const userFound = await User.findById(user.id)
+        if(!userFound) return res.status(401).json({message: "No autorizado"});
+
+        return res.json({
+            id: userFound._id,
+            correo: userFound.correo,
+            run: userFound.run,
+        });  
     });
 };
