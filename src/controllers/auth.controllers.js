@@ -1,6 +1,7 @@
 import User from "../models/user.models.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 import {createAccessToken} from "../libs/jwt.js";
 import { TOKEN_S } from "../../config.js";
 import Contract from "../models/contract.model.js";
